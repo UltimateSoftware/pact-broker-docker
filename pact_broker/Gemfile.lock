@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://docker.mia.ulti.io/artifactory/api/gems/ruby-gems/
   specs:
     as-notifications (1.0.1)
     awesome_print (1.8.0)
@@ -169,7 +170,7 @@ PLATFORMS
 
 DEPENDENCIES
   mysql2 (~> 0.3)
-  pact_broker
+  pact_broker!
   pg (~> 1.0)
   puma (~> 3.12)
   rake (~> 13.0)
