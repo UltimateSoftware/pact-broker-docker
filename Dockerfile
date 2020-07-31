@@ -9,6 +9,8 @@ RUN set -ex && \
   chmod g+w $HOME
 
 # Install Gems
+ARG ARTIFACTORY_USERNAME
+ARG ARTIFACTORY_PASSWORD
 WORKDIR $HOME
 COPY pact_broker/Gemfile pact_broker/Gemfile.lock $HOME/
 RUN cat Gemfile.lock | grep -A1 "BUNDLED WITH" | tail -n1 | awk '{print $1}' > BUNDLER_VERSION
@@ -20,6 +22,7 @@ RUN set -ex && \
   find /usr/local/lib/ruby -name webrick* -exec rm -rf {} + && \
   bundle config set deployment 'true' && \
   bundle config set no-cache 'true' && \
+  bundle config docker.mia.ulti.io/artifactory/api/gems/ruby-gems ${ARTIFACTORY_USERNAME}:${ARTIFACTORY_PASSWORD} && \
   bundle install --without='development test' && \
   rm -rf vendor/bundle/ruby/*/cache .bundle/cache && \
   apk del make gcc libc-dev git
